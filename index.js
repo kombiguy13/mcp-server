@@ -1,29 +1,24 @@
-import { Server } from "@modelcontextprotocol/sdk/server";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import dotenv from "dotenv";
 import { wp_post } from "./tools/wordpress.js";
+import { z } from "zod";
 
 dotenv.config();
 
-const server = new Server({
+const server = new McpServer({
   name: "WordPress MCP Server",
-  instructions: "Use this to post directly to WordPress with an image.",
-  tools: [
-    {
-      name: "wp_post",
-      description: "Post to WordPress with optional image.",
-      inputSchema: {
-        type: "object",
-        properties: {
-          title: { type: "string" },
-          content: { type: "string" },
-          image_url: { type: "string" },
-          filename: { type: "string" }
-        },
-        required: ["title", "content", "image_url", "filename"]
-      },
-      func: wp_post
-    }
-  ]
+  version: "1.0.0"
 });
 
-server.listen(3000);
+server.tool("wp_post", {
+  title: z.string(),
+  content: z.string(),
+  image_url: z.string(),
+  filename: z.string()
+}, wp_post);
+
+// Start the server using the appropriate transport
+// For example, using stdio transport:
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+const transport = new StdioServerTransport();
+await server.connect(transport);
