@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.1.0",
+    "@modelcontextprotocol/sdk": "git+https://github.com/modelcontext/modelcontextprotocol.git",
     "dotenv": "^16.3.1",
     "node-fetch": "^3.4.1"
   }
