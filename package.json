@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
-  },
+  }, 
   "dependencies": {
     "@modelcontextprotocol/sdk": "https://github.com/modelcontext/modelcontextprotocol.git",
     "dotenv": "^16.3.1",
