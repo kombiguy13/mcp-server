@@ -9,6 +9,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "https://github.com/kombiguy13/mcp-sdk.git",
     "dotenv": "^16.3.1",
+    "express": "^5.1.0",
     "node-fetch": "^3.3.2",
     "zod": "^3.25.63"
   }
