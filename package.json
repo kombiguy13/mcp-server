@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "https://github.com/kombiguy13/mcp-sdk.git",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^5.1.0",
     "node-fetch": "^3.3.2",
