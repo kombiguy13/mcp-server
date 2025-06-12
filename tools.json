@@ -12,10 +12,11 @@
       },
       "required": ["title", "content", "image_url", "filename"]
     },
-    "handler": {
-      "type": "webhook",
+    "endpoint": {
+      "type": "http",
       "url": "https://mcp-server-emi8.onrender.com/wp_post",
-      "method": "POST"
+      "method": "POST",
+      "request_body": "json"
     }
   }
 ]
