@@ -1,0 +1,21 @@
+[
+  {
+    "name": "wp_post",
+    "description": "Post to WordPress with optional image.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "image_url": { "type": "string" },
+        "filename": { "type": "string" }
+      },
+      "required": ["title", "content", "image_url", "filename"]
+    },
+    "handler": {
+      "type": "webhook",
+      "url": "https://mcp-server-emi8.onrender.com/wp_post",
+      "method": "POST"
+    }
+  }
+]
