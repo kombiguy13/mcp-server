@@ -1,4 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import dotenv from "dotenv";
 import { wp_post } from "./tools/wordpress.js";
 import { z } from "zod";
@@ -17,8 +18,5 @@ server.tool("wp_post", {
   filename: z.string()
 }, wp_post);
 
-// Start the server using the appropriate transport
-// For example, using stdio transport:
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 const transport = new StdioServerTransport();
 await server.connect(transport);

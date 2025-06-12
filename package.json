@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
-  }, 
+  },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "https://github.com/modelcontext/modelcontextprotocol.git",
+    "@modelcontextprotocol/sdk": "https://github.com/kombiguy13/mcp-sdk.git",
     "dotenv": "^16.3.1",
-    "node-fetch": "^3.4.1"
+    "node-fetch": "^3.3.2",
+    "zod": "^3.25.63"
   }
 }
