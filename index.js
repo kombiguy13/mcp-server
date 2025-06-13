@@ -15,15 +15,19 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve tools.json
+// ✅ Serve tools.json with CORS
 app.get("/tools.json", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Content-Type", "application/json");
   res.sendFile(path.resolve(__dirname, "tools.json"));
 });
 
-// ✅ Simple Date Tool Endpoint
+// ✅ Debuggable Date Tool Endpoint
 app.post("/get_date", (req, res) => {
+  console.log("🔍 Received request at /get_date");
+  console.log("🧾 Headers:", req.headers);
+  console.log("📦 Body:", req.body);
+
   const now = new Date();
   res.json({
     message: `The current server date and time is ${now.toISOString()}`
