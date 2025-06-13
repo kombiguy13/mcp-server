@@ -1,40 +1,43 @@
-// index.js
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
+#!/usr/bin/env node
+import { FastMCP } from "fastmcp";
+import { StreamableHttpTransport } from "fastmcp/transports/http";
 import { z } from "zod";
+import dotenv from "dotenv";
 
 dotenv.config();
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// Get __dirname with ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// ✅ Serve tools.json with CORS
-app.get("/tools.json", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Content-Type", "application/json");
-  res.sendFile(path.resolve(__dirname, "tools.json"));
-});
-
-// ✅ Debuggable Date Tool Endpoint
-app.post("/get_date", (req, res) => {
-  console.log("🔍 Received request at /get_date");
-  console.log("🧾 Headers:", req.headers);
-  console.log("📦 Body:", req.body);
-
-  const now = new Date();
-  res.json({
-    message: `The current server date and time is ${now.toISOString()}`
-  });
-});
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`MCP HTTP server listening on port ${PORT}`);
+
+const mcp = new FastMCP({
+  name: "Simple Date Server",
+  instructions: "This server returns the current server date and time.",
 });
+
+// Add logging for Claude's calls
+mcp.on("list", () => {
+  console.log("🔍 Claude is requesting list-tools");
+});
+mcp.on("call", ({ name }) => {
+  console.log(`📞 Claude is calling: ${name}`);
+});
+
+// Define the tool
+mcp.tool({
+  name: "get_date",
+  description: "Get the current server date and time in ISO format.",
+  inputSchema: z.object({}),
+  outputSchema: z.object({ message: z.string() }),
+  execute: async () => {
+    const now = new Date().toISOString();
+    return { message: `The current server date and time is ${now}` };
+  },
+});
+
+// Start server
+const transport = new StreamableHttpTransport({
+  port: PORT,
+  host: "0.0.0.0", // Required for Render
+});
+transport.listen(mcp);
+
+console.log(`✅ MCP server listening on http://0.0.0.0:${PORT}`);
